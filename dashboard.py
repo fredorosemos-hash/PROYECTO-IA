@@ -19,11 +19,18 @@ with st.sidebar:
 
 # Encabezado institucional con logo Fiscalía
 LOGO_FISCALIA = "https://upload.wikimedia.org/wikipedia/commons/2/2e/Logo_Fiscalia_General_de_la_Nacion_Colombia.png"
+st.markdown("""
+<div style='width:100%;background:#e30613;padding:0;margin:0;'>
+    <marquee behavior='scroll' direction='left' style='color:#fff;font-size:1.3rem;font-family:Segoe UI,Arial,sans-serif;font-weight:bold;padding:8px 0;'>
+        PROYECTO TALENTO TECH REGION 2 FISCALIA GENERAL DE LA NACION
+    </marquee>
+</div>
+""", unsafe_allow_html=True)
 st.image(LOGO_FISCALIA, width=220)
 st.markdown(f"""
 <div style='background-color:#002855;padding:10px 0 16px 0;text-align:center;'>
-    <h1 style='color:#fff;font-family:Segoe UI,Arial,sans-serif;font-size:2.7rem;margin:0;'>Fiscalía General de la Nación</h1>
-    <h2 style='color:#e30613;font-family:Segoe UI,Arial,sans-serif;font-size:1.4rem;margin:0;'>Dashboard de Ciberseguridad</h2>
+        <h1 style='color:#fff;font-family:Segoe UI,Arial,sans-serif;font-size:2.7rem;margin:0;'>Fiscalía General de la Nación</h1>
+        <h2 style='color:#e30613;font-family:Segoe UI,Arial,sans-serif;font-size:1.4rem;margin:0;'>Dashboard de Ciberseguridad</h2>
 </div>
 """, unsafe_allow_html=True)
 
