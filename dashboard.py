@@ -1,4 +1,5 @@
 
+
 import streamlit as st
 import matplotlib.pyplot as plt
 import folium
@@ -6,6 +7,8 @@ from streamlit_folium import st_folium
 import pandas as pd
 from io import BytesIO
 from docx import Document
+from docx.shared import Pt, Inches
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 with st.sidebar:
     st.markdown("""
