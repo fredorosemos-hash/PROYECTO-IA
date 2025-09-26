@@ -93,7 +93,7 @@ col1, col2 = st.columns([3,2])
 
 with col1:
     st.markdown("<div class='neon-box'><h2 class='neon-title'>Delitos por ciudad</h2>", unsafe_allow_html=True)
-    fig, ax = plt.subplots(figsize=(3.5,2.2), facecolor='#0f2027')
+    fig, ax = plt.subplots(figsize=(2,1.2), facecolor='#0f2027')
     ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'])
     ax.set_ylabel('Cantidad', color='#fff')
     ax.set_xlabel('Ciudad', color='#fff')
@@ -103,7 +103,7 @@ with col1:
     st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("<div class='neon-box'><h2 class='neon-title'>Distribución de delitos</h2>", unsafe_allow_html=True)
-    fig2, ax2 = plt.subplots(figsize=(2.5,2.5), facecolor='#0f2027')
+    fig2, ax2 = plt.subplots(figsize=(1.2,1.2), facecolor='#0f2027')
     ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'])
     fig2.patch.set_facecolor('#0f2027')
     st.pyplot(fig2, use_container_width=True)
@@ -122,7 +122,7 @@ with col2:
     for ciudad, cantidad in zip(ciudades, delitos_reportados):
         if ciudad in coords:
             folium.Marker(coords[ciudad], popup=f"{ciudad}: {cantidad} delitos").add_to(mapa)
-    st_folium(mapa, width=320, height=160)
+    st_folium(mapa, width=480, height=320)
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Botón para descargar informe
