@@ -7,11 +7,11 @@ import pandas as pd
 from io import BytesIO
 from docx import Document
 
-# Encabezado institucional sin logo
+# Encabezado institucional estilo Fiscalía
 st.markdown("""
-<div style='background-color:#006837;padding:18px 0 12px 0;text-align:center;'>
-    <h1 style='color:#fff;font-family:Segoe UI,Arial,sans-serif;font-size:2.5rem;margin:0;'>Fiscalía General de la Nación</h1>
-    <h2 style='color:#ffe600;font-family:Segoe UI,Arial,sans-serif;font-size:1.3rem;margin:0;'>Dashboard de Ciberseguridad</h2>
+<div style='background-color:#002855;padding:22px 0 16px 0;text-align:center;'>
+    <h1 style='color:#fff;font-family:Segoe UI,Arial,sans-serif;font-size:2.7rem;margin:0;'>Fiscalía General de la Nación</h1>
+    <h2 style='color:#e30613;font-family:Segoe UI,Arial,sans-serif;font-size:1.4rem;margin:0;'>Dashboard de Ciberseguridad</h2>
 </div>
 """, unsafe_allow_html=True)
 
@@ -26,31 +26,31 @@ col1, col2 = st.columns([2,2])
 st.markdown("""
 <style>
 body {
-    background: linear-gradient(135deg, #eaf6f3 0%, #b2d8d8 100%);
+    background: linear-gradient(135deg, #f4f6fa 0%, #e9ecf2 100%);
 }
 .card {
     background: #fff;
     border-radius: 14px;
-    box-shadow: 0 2px 12px rgba(0,104,55,0.12);
-    border: 2px solid #006837;
+    box-shadow: 0 2px 12px rgba(0,40,85,0.10);
+    border: 2px solid #e30613;
     padding: 18px 16px 12px 16px;
     margin-bottom: 28px;
 }
 .title {
     font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 2rem;
-    color: #006837;
+    color: #002855;
     font-weight: bold;
     margin-bottom: 8px;
 }
 .subtitle {
     font-family: 'Segoe UI', Arial, sans-serif;
     font-size: 1.2rem;
-    color: #2c5364;
+    color: #e30613;
     margin-bottom: 12px;
 }
 .btn {
-    background-color: #006837;
+    background-color: #e30613;
     color: #fff;
     border-radius: 8px;
     padding: 10px 24px;
