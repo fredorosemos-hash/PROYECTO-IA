@@ -209,6 +209,32 @@ if st.button("Descargar informe", key="neon-btn"):
     )
     texto.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
+    # Sección institucional: Cartilla 5
+    cartilla_title = doc.add_paragraph()
+    run_cartilla = cartilla_title.add_run('CARTILLA 5: HERRAMIENTAS ANALÍTICAS PARA LA INVESTIGACIÓN Y EL EJERCICIO DE LA ACCIÓN PENAL')
+    run_cartilla.bold = True
+    cartilla_title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    cartilla_text = (
+        "La política de priorización implica una aproximación analítica y rigurosa a la investigación y al ejercicio de la acción penal. Contribuye al planteamiento de hipótesis delictivas que puedan ser confirmadas o rechazadas a medida que avanza la investigación.\n\n"
+        "La resolución 1343 de 2014 establece actividades de priorización respecto a situaciones y casos: fijar un orden en el que serán atendidos; destinar más funcionarios y herramientas; agrupar e investigar casos asociados; aplicar herramientas analíticas en el trámite, investigación y judicialización; enfocar esfuerzos en ciertos casos o hechos delictivos y en algunos presuntos responsables. Tres de las seis actividades proponen el uso del análisis en contexto y la focalización de la investigación y la acción penal en hechos y responsables.\n\n"
+        "Esta cartilla presenta cinco herramientas analíticas para analistas criminales, fiscales, investigadores y asistentes de fiscal. Todas son de fácil uso, retoman la forma de analizar la información con la que cuenta la Fiscalía e indican fuentes que pueden contribuir a una investigación más integral. No reemplazan la labor investigativa de la policía judicial.\n\n"
+        "Las cinco herramientas parten de tres cambios metodológicos fundamentales:\n"
+        "1. Ampliar el foco de la investigación: reconocer que los hechos delictivos no ocurren de manera aislada sino que se explican por su contexto y plantear hipótesis de trabajo para ser confirmadas o rechazadas a través del análisis de la información y evidencia disponibles.\n"
+        "2. Disponer de diversas fuentes de información y ser riguroso con su uso: analizar elementos materiales probatorios (EMP), evidencia física (EF) e información de fuentes formales y no formales sobre los hechos y su contexto.\n"
+        "3. Utilizar otras disciplinas para explicar fenómenos criminales, situaciones y casos: incluir la aproximación de las ciencias sociales y exactas para comprender el delito e ilustrar la teoría del caso.\n\n"
+        "Las herramientas contribuyen a la toma de decisiones de priorización y facilitan el diseño de hipótesis criminales y estrategias de persecución en las diferentes etapas de la investigación, independientemente del régimen procesal. La identificación de fenómenos criminales y la delimitación de situaciones y asociación de casos permiten determinar relaciones entre investigaciones y delitos no denunciados, focalizar la atención en grupos de casos no aislados, distribuir eficazmente recursos y talento humano, y plantear la teoría del caso en etapas preliminares. Las otras tres herramientas aportan elementos para la caracterización de hechos delictivos y actores (víctimas y responsables), útiles en momentos posteriores de la investigación. Permiten focalizar decisiones sobre hechos y personas según criterios de priorización y alimentar la comprensión de la evidencia recolectada.\n\n"
+        "Las herramientas son:\n"
+        "- Identificación de fenómenos criminales y estudio de resultados.\n"
+        "- Delimitación de situación y asociación de casos.\n"
+        "- Caracterización de situaciones a partir de prácticas y patrones criminales.\n"
+        "- Caracterización de víctimas.\n"
+        "- Caracterización de estructuras criminales.\n\n"
+        "Estas herramientas permiten investigaciones integrales, rigurosas y estratégicas, orientadas a la priorización y judicialización efectiva."
+    )
+    cartilla_paragraph = doc.add_paragraph(cartilla_text)
+    cartilla_paragraph.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+
     # Gráfico de barras: total de delitos por ciudad
     fig, ax = plt.subplots(figsize=(5,3))
     ax.bar(ciudades, delitos_reportados, color='#e30613', edgecolor='#002855', linewidth=1.5)
@@ -218,36 +244,35 @@ if st.button("Descargar informe", key="neon-btn"):
     ax.tick_params(labelsize=11)
     for i, v in enumerate(delitos_reportados):
         ax.text(i, v + 20, str(v), ha='center', va='bottom', color='#e30613', fontweight='bold', fontsize=11)
-    fig.tight_layout()
-    img_stream = io.BytesIO()
-    fig.savefig(img_stream, format='png')
-    img_stream.seek(0)
-    doc.add_picture(img_stream, width=Inches(5.5))
-    plt.close(fig)
 
-    # Gráfico de torta: distribución de delitos
-    fig2, ax2 = plt.subplots(figsize=(3,3))
-    wedges, texts, autotexts = ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'], wedgeprops={'edgecolor':'#fff','linewidth':1.2}, startangle=90)
-    ax2.set_title('Distribución de Delitos', fontsize=10, fontweight='bold', fontname='Arial')
-    fig2.tight_layout()
-    img_stream2 = io.BytesIO()
-    fig2.savefig(img_stream2, format='png')
-    img_stream2.seek(0)
-    doc.add_picture(img_stream2, width=Inches(3.5))
-    plt.close(fig2)
+    # Título principal
+    title = doc.add_heading('INFORME DE GESTIÓN 2022-2025', 0)
+    title.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-    # Ranking de ciudades
-    par = doc.add_paragraph()
-    par.add_run('Ranking de ciudades por cantidad de delitos reportados:').bold = True
-    par.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    table = doc.add_table(rows=1, cols=3)
-    hdr_cells = table.rows[0].cells
-    hdr_cells[0].text = 'Posición'
-    hdr_cells[1].text = 'Ciudad'
-    hdr_cells[2].text = 'Delitos reportados'
-    for idx, (ciudad, cantidad) in enumerate(ranking_ciudades, 1):
-        row_cells = table.add_row().cells
-        row_cells[0].text = str(idx)
+    subtitle = doc.add_paragraph()
+    run = subtitle.add_run('Fiscalía General de la Nación')
+    run.bold = True
+    subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    # Resumen ejecutivo
+    resumen = doc.add_paragraph()
+    resumen.add_run('Resumen Ejecutivo').bold = True
+    resumen.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    texto = doc.add_paragraph(
+        f"Durante el periodo 2020-2024, la Fiscalía General de la Nación gestionó un total de {sum(delitos_reportados)} delitos reportados en las principales ciudades del país. "
+        f"La ciudad con mayor incidencia fue {ciudades[delitos_reportados.index(max(delitos_reportados))]} ({max(delitos_reportados)} casos, {max(delitos_reportados)/sum(delitos_reportados):.1%} del total), mientras que la de menor incidencia fue {ciudades[delitos_reportados.index(min(delitos_reportados))]} ({min(delitos_reportados)} casos, {min(delitos_reportados)/sum(delitos_reportados):.1%}). "
+        "Los delitos más frecuentes fueron: " + ", ".join([f"{delito} ({cant})" for delito, cant in sorted(zip(delitos, delitos_cant), key=lambda x: x[1], reverse=True)]) + ". "
+        "El análisis de estos datos permite identificar tendencias y orientar estrategias institucionales para la prevención y judicialización de los delitos más relevantes."
+    )
+    texto.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+
+    # Sección institucional: Cartilla 5
+    cartilla_title = doc.add_paragraph()
+    run_cartilla = cartilla_title.add_run('CARTILLA 5: HERRAMIENTAS ANALÍTICAS PARA LA INVESTIGACIÓN Y EL EJERCICIO DE LA ACCIÓN PENAL')
+    run_cartilla.bold = True
+    cartilla_title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    cartilla_text = '''La política de priorización implica una aproximación analítica y rigurosa a la investigación y al ejercicio de la acción penal. Contribuye al planteamiento de hipótesis delictivas que puedan ser confirmadas o rechazadas a medida que avanza la investigación.
         row_cells[1].text = ciudad
         row_cells[2].text = str(cantidad)
 
@@ -261,13 +286,10 @@ if st.button("Descargar informe", key="neon-btn"):
     hdr2[2].text = 'Casos reportados'
     for idx, (delito, cant) in enumerate(ranking_delitos, 1):
         row_cells = table2.add_row().cells
-        row_cells[0].text = str(idx)
-        row_cells[1].text = delito
-        row_cells[2].text = str(cant)
-
-    par3 = doc.add_paragraph()
     par3.add_run('Distribución porcentual de delitos por ciudad:').bold = True
     par3.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    cartilla_paragraph = doc.add_paragraph(cartilla_text)
+    cartilla_paragraph.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     for ciudad, cantidad in ranking_ciudades:
         p = doc.add_paragraph(f"- {ciudad}: {cantidad} casos ({cantidad/total_delitos:.1%})")
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
