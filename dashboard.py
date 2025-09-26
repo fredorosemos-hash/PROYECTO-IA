@@ -132,19 +132,31 @@ if st.button("Descargar informe", key="neon-btn"):
     doc = Document()
     doc.add_heading('INFORME DE GESTIÓN 2020-2024', 0)
     doc.add_paragraph('Fiscalía General de la Nación')
-    doc.add_paragraph('Balance de la Administración')
-    doc.add_paragraph('Delitos reportados por ciudad:')
+
+    # Redacción automática con IA
+    resumen = f"Durante el periodo 2020-2024, la Fiscalía General de la Nación ha gestionado un total de {sum(delitos_reportados)} delitos reportados en las principales ciudades del país. "
+    resumen += f"La ciudad con mayor incidencia fue {ciudades[delitos_reportados.index(max(delitos_reportados))]} con {max(delitos_reportados)} casos, mientras que la de menor incidencia fue {ciudades[delitos_reportados.index(min(delitos_reportados))]} con {min(delitos_reportados)} casos. "
+    resumen += "Los delitos más frecuentes fueron: " + ", ".join([f"{delito} ({cant})" for delito, cant in zip(delitos, delitos_cant)]) + ". "
+    resumen += "El análisis de estos datos permite identificar tendencias y orientar estrategias institucionales para la prevención y judicialización de los delitos más relevantes."
+    doc.add_paragraph(resumen)
+
+    doc.add_paragraph('Detalle de delitos reportados por ciudad:')
     table = doc.add_table(rows=1, cols=2)
     hdr_cells = table.rows[0].cells
     hdr_cells[0].text = 'Ciudad'
-    hdr_cells[1].text = 'Delitos'
+    hdr_cells[1].text = 'Delitos reportados'
     for ciudad, cantidad in zip(ciudades, delitos_reportados):
         row_cells = table.add_row().cells
         row_cells[0].text = ciudad
         row_cells[1].text = str(cantidad)
+
     doc.add_paragraph('Distribución de delitos:')
     for delito, cant in zip(delitos, delitos_cant):
-        doc.add_paragraph(f"{delito}: {cant}")
+        doc.add_paragraph(f"- {delito}: {cant} casos")
+
+    conclusion = f"En conclusión, el periodo analizado evidencia que {ciudades[delitos_reportados.index(max(delitos_reportados))]} requiere especial atención por su alta incidencia delictiva, mientras que el delito más frecuente es {delitos[delitos_cant.index(max(delitos_cant))]}. La Fiscalía continuará fortaleciendo sus capacidades investigativas y preventivas para mejorar la seguridad ciudadana."
+    doc.add_paragraph(conclusion)
+
     # Guardar y descargar
     buffer = BytesIO()
     doc.save(buffer)
