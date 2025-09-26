@@ -1,3 +1,12 @@
+with st.sidebar:
+    st.markdown("""
+    <div style='margin-top:30px;'>
+        <a href='https://www.presidencia.gov.co/' target='_blank'><button class='btn' style='width:100%;margin-bottom:12px;'>Presidencia</button></a>
+        <a href='https://www.procuraduria.gov.co/' target='_blank'><button class='btn' style='width:100%;margin-bottom:12px;'>Procuraduría</button></a>
+        <a href='https://www.mintic.gov.co/' target='_blank'><button class='btn' style='width:100%;margin-bottom:12px;'>MinTIC</button></a>
+        <a href='https://www.fiscalia.gov.co/colombia/' target='_blank'><button class='btn' style='width:100%;margin-bottom:12px;'>Fiscalía</button></a>
+    </div>
+    """, unsafe_allow_html=True)
 
 import streamlit as st
 import matplotlib.pyplot as plt
