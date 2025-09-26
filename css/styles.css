@@ -1,0 +1,156 @@
+.geo-btn {
+    margin: 24px 0 0 0;
+    background: linear-gradient(90deg, #2c5364 0%, #00eaff 100%);
+    color: #fff;
+    font-weight: bold;
+    border-radius: 18px;
+    font-size: 1.1rem;
+    font-family: 'Orbitron', Arial, sans-serif;
+    padding: 16px 10px;
+    box-shadow: 0 2px 8px #00eaff44;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+.geo-btn:hover {
+    background: linear-gradient(90deg, #00eaff 0%, #2c5364 100%);
+    color: #00ffae;
+}
+.sidebar-informe {
+    margin-top: 32px;
+    background: linear-gradient(90deg, #ffb700 0%, #00ffae 100%);
+    color: #181c24;
+    font-weight: bold;
+    border-radius: 18px;
+    font-size: 1.1rem;
+    font-family: 'Orbitron', Arial, sans-serif;
+    padding: 16px 10px;
+    box-shadow: 0 2px 8px #ffb70044;
+    transition: background 0.3s, color 0.3s;
+}
+.sidebar-informe:hover {
+    background: linear-gradient(90deg, #00ffae 0%, #ffb700 100%);
+    color: #fff;
+}
+/* Barra lateral de navegación */
+.main-layout {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+}
+.sidebar {
+    width: 260px;
+    background: linear-gradient(180deg, #181c24 80%, #00ffae22 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 40px 20px 0 20px;
+    box-shadow: 2px 0 12px #00ffae22;
+    gap: 18px;
+}
+.sidebar button {
+    background: linear-gradient(90deg, #00eaff 0%, #00ffae 100%);
+    color: #181c24;
+    border: none;
+    border-radius: 18px;
+    font-size: 1.1rem;
+    font-family: 'Orbitron', Arial, sans-serif;
+    margin-bottom: 8px;
+    padding: 16px 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #00ffae44;
+    transition: background 0.3s, color 0.3s;
+}
+.sidebar button:hover {
+    background: linear-gradient(90deg, #00ffae 0%, #00eaff 100%);
+    color: #fff;
+}
+main {
+    flex: 1;
+}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+body {
+    background: #181c24;
+    color: #e0eafc;
+    font-family: 'Orbitron', Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+header {
+    background: linear-gradient(90deg, #0f2027, #2c5364);
+    padding: 30px 0 20px 0;
+    border-bottom: 2px solid #00ffae;
+    box-shadow: 0 4px 20px #00ffae33;
+}
+.logo {
+    display: block;
+    margin: 0 auto 18px auto;
+    height: 90px;
+    filter: drop-shadow(0 0 10px #00ffae);
+}
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #00eaff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #00ffae, 0 0 20px #00eaff;
+}
+/* Centrado vertical para logo y título */
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+main {
+    padding: 40px 5vw;
+}
+#dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    align-items: flex-start;
+}
+.charts {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    min-width: 350px;
+    align-items: center;
+}
+canvas {
+    background: #222c3c;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px #00eaff44;
+    padding: 20px;
+}
+#map {
+    width: 500px;
+    height: 400px;
+    max-width: 100%;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px #00ffae44;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: block;
+    align-self: center;
+}
+#btnInforme {
+    display: block;
+    margin: 40px auto 0 auto;
+    padding: 18px 40px;
+    font-size: 1.2rem;
+    font-family: 'Orbitron', Arial, sans-serif;
+    background: linear-gradient(90deg, #00eaff 0%, #00ffae 100%);
+    color: #181c24;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 2px 12px #00ffae44;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+#btnInforme:hover {
+    background: linear-gradient(90deg, #00ffae 0%, #00eaff 100%);
+    color: #fff;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Fiscalía General de la Nación</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="../assets/LOGO FGN.JPG" alt="Logo Fiscalía" class="logo">
+            <h1>DASHBOARD FISCALIA GENERAL DE LA NACION</h1>
+        </div>
+    </header>
+    <div class="main-layout">
+        <nav class="sidebar">
+            <button onclick="window.open('https://www.presidencia.gov.co/', '_blank')">Presidencia de la República</button>
+            <button onclick="window.open('https://www.procuraduria.gov.co/', '_blank')">Procuraduría General</button>
+            <button onclick="window.open('https://www.fiscalia.gov.co/', '_blank')">Fiscalía General de la Nación</button>
+            <button onclick="window.open('https://www.medicinalegal.gov.co/', '_blank')">Medicina Legal</button>
+            <button onclick="window.open('https://www.contraloria.gov.co/', '_blank')">Contraloría General</button>
+            <button id="btnGeo" class="geo-btn">Georeferenciación del delito</button>
+            <button id="btnInforme" class="sidebar-informe">Generar informe detallado</button>
+        </nav>
+        <main>
+            <section id="dashboard">
+                <div class="charts">
+                    <input type="file" id="fileInput" accept=".csv,.json,.xlsx,.xls" style="margin-bottom:20px;" />
+                    <canvas id="barChart"></canvas>
+                    <canvas id="pieChart"></canvas>
+                </div>
+                <div id="map" style="height: 400px; display:none;"></div>
+            </section>
+        </main>
+    </div>
+    <script src="../js/scripts.js"></script>
+</body>
+</html>
