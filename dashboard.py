@@ -1,3 +1,13 @@
+LOGO_URL = "https://www.policia.gov.co/sites/default/files/escudo_policia_nacional.png"
+
+# Encabezado institucional
+st.markdown(f"""
+<div style='background-color:#006837;padding:18px 0 12px 0;text-align:center;'>
+    <img src='{LOGO_URL}' alt='Logo Policía Nacional' style='height:80px;margin-bottom:8px;'>
+    <h1 style='color:#fff;font-family:Segoe UI,Arial,sans-serif;font-size:2.5rem;margin:0;'>Fiscalía General de la Nación</h1>
+    <h2 style='color:#ffe600;font-family:Segoe UI,Arial,sans-serif;font-size:1.3rem;margin:0;'>Dashboard de Ciberseguridad</h2>
+</div>
+""", unsafe_allow_html=True)
 import streamlit as st
 import matplotlib.pyplot as plt
 import folium
@@ -17,24 +27,44 @@ col1, col2 = st.columns([2,2])
 st.markdown("""
 <style>
 body {
-    background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+    background: linear-gradient(135deg, #eaf6f3 0%, #b2d8d8 100%);
 }
-.neon-title {
-    font-family: 'Orbitron', 'Segoe UI', sans-serif;
-    font-size: 2.5rem;
+.card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,104,55,0.12);
+    border: 2px solid #006837;
+    padding: 18px 16px 12px 16px;
+    margin-bottom: 28px;
 }
-.neon-box {
-    margin-bottom: 32px;
-    border: 2px solid #00eaff;
-    padding: 16px;
-    border-radius: 12px;
-    background: rgba(24,28,43,0.85);
-    box-shadow: 0 0 16px #00eaff;
+.title {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 2rem;
+    color: #006837;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.subtitle {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 1.2rem;
+    color: #2c5364;
+    margin-bottom: 12px;
+}
+.btn {
+    background-color: #006837;
+    color: #fff;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
 }
 </style>
 """, unsafe_allow_html=True)
 with col1:
-    st.markdown("<div class='neon-box' style='text-align:center;'><h2 class='neon-title'>Delitos por ciudad</h2>", unsafe_allow_html=True)
+    st.markdown("<div class='card' style='text-align:center;'><div class='title'>Delitos por ciudad</div>", unsafe_allow_html=True)
     fig, ax = plt.subplots(figsize=(5,3), facecolor='#181c2b')
     bars = ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'], edgecolor='#fff', linewidth=1.2)
     ax.set_ylabel('Cantidad', color='#00eaff', fontsize=12, fontweight='bold', fontname='Arial')
@@ -50,7 +80,7 @@ with col1:
     ax.spines['left'].set_color('#00eaff')
     ax.spines['bottom'].set_color('#00eaff')
     # Etiquetas de valores sobre las barras
-    st.markdown("<div class='neon-box' style='text-align:center;'><h2 class='neon-title'>Distribución de delitos</h2>", unsafe_allow_html=True)
+    st.markdown("<div class='card' style='text-align:center;'><div class='title'>Distribución de delitos</div>", unsafe_allow_html=True)
     fig2, ax2 = plt.subplots(figsize=(3,3), facecolor='#181c2b')
     wedges, texts, autotexts = ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'], wedgeprops={'edgecolor':'#fff','linewidth':1.2}, startangle=90)
     for text in texts:
@@ -63,7 +93,7 @@ with col1:
     st.markdown("</div>", unsafe_allow_html=True)
 
 with col2:
-    st.markdown("<div class='neon-box'><h2 class='neon-title'>Mapa de delitos por ciudad</h2>", unsafe_allow_html=True)
+    st.markdown("<div class='card'><div class='title'>Mapa de delitos por ciudad</div>", unsafe_allow_html=True)
     coords = {
         'Bogotá': [4.7110, -74.0721],
         'Medellín': [6.2442, -75.5812],
@@ -79,7 +109,7 @@ with col2:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Botón para descargar informe
-st.markdown("<div class='neon-box'><h2 class='neon-title'>Generar informe tipo Word</h2>", unsafe_allow_html=True)
+st.markdown("<div class='card'><div class='title'>Generar informe tipo Word</div>", unsafe_allow_html=True)
 if st.button("Descargar informe", key="neon-btn"):
     from docx import Document
     doc = Document()
