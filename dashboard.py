@@ -66,10 +66,11 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Barra lateral futurista
-st.sidebar.markdown("<h2 style='color:#00eaff;font-family:Orbitron;'>Panel de opciones</h2>", unsafe_allow_html=True)
-st.sidebar.header("Carga de datos")
-data_file = st.sidebar.file_uploader("Sube un archivo CSV o JSON", type=["csv", "json"])
+
+# Carga de datos (sin panel lateral)
+st.markdown("<div class='neon-box' style='margin-bottom:16px;'><h3 class='neon-sub'>Carga de datos</h3>", unsafe_allow_html=True)
+data_file = st.file_uploader("Sube un archivo CSV o JSON", type=["csv", "json"])
+st.markdown("</div>", unsafe_allow_html=True)
 
 # Datos por defecto
 ciudades = ['Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena']
@@ -94,20 +95,20 @@ col1, col2 = st.columns([2,2])
 
 with col1:
     st.markdown("<div class='neon-box'><h2 class='neon-title'>Delitos por ciudad</h2>", unsafe_allow_html=True)
-    fig, ax = plt.subplots(facecolor='#0f2027')
+    fig, ax = plt.subplots(figsize=(6,4), facecolor='#0f2027')
     ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'])
     ax.set_ylabel('Cantidad', color='#fff')
     ax.set_xlabel('Ciudad', color='#fff')
     ax.tick_params(colors='#00eaff')
     fig.patch.set_facecolor('#0f2027')
-    st.pyplot(fig)
+    st.pyplot(fig, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("<div class='neon-box'><h2 class='neon-title'>Distribución de delitos</h2>", unsafe_allow_html=True)
-    fig2, ax2 = plt.subplots(facecolor='#0f2027')
+    fig2, ax2 = plt.subplots(figsize=(5,5), facecolor='#0f2027')
     ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'])
     fig2.patch.set_facecolor('#0f2027')
-    st.pyplot(fig2)
+    st.pyplot(fig2, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
 with col2:
@@ -123,7 +124,7 @@ with col2:
     for ciudad, cantidad in zip(ciudades, delitos_reportados):
         if ciudad in coords:
             folium.Marker(coords[ciudad], popup=f"{ciudad}: {cantidad} delitos").add_to(mapa)
-    st_folium(mapa, width=700, height=400)
+    st_folium(mapa, width=600, height=350)
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Botón para descargar informe
