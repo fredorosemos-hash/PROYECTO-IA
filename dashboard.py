@@ -53,7 +53,7 @@ col1, col2 = st.columns([2,2])
 st.markdown("""
 <style>
 body {
-    background: linear-gradient(135deg, #f4f6fa 0%, #e9ecf2 100%);
+    background: #e0e0e0;
 }
 .card {
     background: #fff;
