@@ -42,7 +42,7 @@ try:
     st.markdown(
         """
         <div style='text-align:center;'>
-            <span style='font-weight:bold;font-size:1.2rem;text-transform:uppercase;'>FISCALÍA GENERAL DE LA NACIÓN</span>
+            <span style='font-weight:bold;font-size:1.7rem;text-transform:uppercase;'>FISCALÍA GENERAL DE LA NACIÓN SECCIONAL MEDELLÍN</span>
         </div>
         """,
         unsafe_allow_html=True
