@@ -63,6 +63,27 @@ body {
 </style>
 """, unsafe_allow_html=True)
 with col1:
+    # Gráfico de barras: total de delitos por ciudad
+    st.markdown("<div class='card' style='text-align:center;'><div class='title'>Total de delitos por ciudad</div>", unsafe_allow_html=True)
+    fig_total, ax_total = plt.subplots(figsize=(5,3), facecolor='#fff')
+    ax_total.bar(ciudades, delitos_reportados, color='#e30613', edgecolor='#002855', linewidth=1.5)
+    ax_total.set_ylabel('Cantidad', fontsize=12, fontweight='bold', fontname='Arial')
+    ax_total.set_xlabel('Ciudad', fontsize=12, fontweight='bold', fontname='Arial')
+    ax_total.set_title('Total de delitos por ciudad', color='#002855', fontsize=14, fontweight='bold', fontname='Arial', pad=16)
+    ax_total.tick_params(colors='#002855', labelsize=11)
+    for label in ax_total.get_xticklabels() + ax_total.get_yticklabels():
+        label.set_fontsize(11)
+        label.set_fontname('Arial')
+    fig_total.patch.set_facecolor('#fff')
+    ax_total.spines['top'].set_visible(False)
+    ax_total.spines['right'].set_visible(False)
+    ax_total.spines['left'].set_color('#002855')
+    ax_total.spines['bottom'].set_color('#002855')
+    # Etiquetas de valores sobre las barras
+    for i, v in enumerate(delitos_reportados):
+        ax_total.text(i, v + 20, str(v), ha='center', va='bottom', color='#e30613', fontweight='bold', fontsize=11)
+    st.pyplot(fig_total, use_container_width=True)
+    st.markdown("</div>", unsafe_allow_html=True)
     # Gráfico de barras por delitos en cada ciudad
     st.markdown("<div class='card' style='text-align:center;'><div class='title'>Delitos por tipo y ciudad</div>", unsafe_allow_html=True)
     # Datos de ejemplo para delitos por ciudad
