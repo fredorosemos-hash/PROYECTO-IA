@@ -61,12 +61,6 @@ with col1:
     ax2.legend(wedges, delitos, title="Delitos", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), fontsize=7)
     st.pyplot(fig2, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
-    fig2.patch.set_facecolor('#181c2b')
-    ax2.set_title('Distribución de Delitos', color='#ffb700', fontsize=10, fontweight='bold', fontname='Arial')
-    # Leyenda fuera del gráfico
-    ax2.legend(wedges, delitos, title="Delitos", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), fontsize=7)
-    st.pyplot(fig2, use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
 
 with col2:
     st.markdown("<div class='neon-box'><h2 class='neon-title'>Mapa de delitos por ciudad</h2>", unsafe_allow_html=True)
