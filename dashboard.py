@@ -61,26 +61,26 @@ st.markdown(
                 text.set_fontsize(11)
                 st.markdown(
                     """
-                    <style>
-                    body, .stApp {
-                        background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
-                        color: #fff;
-                    }
-                    .neon-box {
-                        background: rgba(20,30,40,0.85);
-                        border-radius: 18px;
-                        box-shadow: 0 0 24px #00eaff, 0 0 8px #ff3b3b;
-                        padding: 32px 24px;
-                        margin-bottom: 32px;
-                        border: 2px solid #00eaff;
-                    }
-                    .neon-title {
-                        font-family: 'Orbitron', 'Segoe UI', sans-serif;
-                        font-size: 2.5rem;
-                    }
-                    </style>
-                    <link href="https://fonts.googleapis.com/css?family=Orbitron:700" rel="stylesheet">
-                    """,
+                <style>
+                body, .stApp {
+                    background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+                    color: #fff;
+                }
+                .neon-box {
+                    background: rgba(20,30,40,0.85);
+                    border-radius: 18px;
+                    box-shadow: 0 0 24px #00eaff, 0 0 8px #ff3b3b;
+                    padding: 32px 24px;
+                    margin-bottom: 32px;
+                    border: 2px solid #00eaff;
+                }
+                .neon-title {
+                    font-family: 'Orbitron', 'Segoe UI', sans-serif;
+                    font-size: 2.5rem;
+                }
+                </style>
+                <link href="https://fonts.googleapis.com/css?family=Orbitron:700" rel="stylesheet">
+                """,
                     unsafe_allow_html=True
                 )
         text.set_fontname('Arial')
