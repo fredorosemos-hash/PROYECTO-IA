@@ -1,27 +1,5 @@
-
-
-import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-import folium
-from streamlit_folium import st_folium
-from io import BytesIO
-
-st.set_page_config(page_title="Dashboard Fiscalía", layout="wide")
-
-# Estilos CSS cibernéticos futuristas
 st.markdown(
     """
-    <style>
-    body, .stApp {
-        background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
-        color: #fff;
-    }
-    .neon-box {
-        background: rgba(20,30,40,0.85);
-        border-radius: 18px;
-        box-shadow: 0 0 24px #00eaff, 0 0 8px #ff3b3b;
-        padding: 32px 24px;
         margin-bottom: 32px;
         border: 2px solid #00eaff;
     }
