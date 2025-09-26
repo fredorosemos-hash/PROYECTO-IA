@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import folium
 from streamlit_folium import st_folium
 import pandas as pd
+import io
 from io import BytesIO
 from docx import Document
 from docx.shared import Pt, Inches
@@ -344,81 +345,6 @@ if st.button("Descargar informe", key="neon-btn"):
         label="Descargar Informe Word",
         data=buffer.getvalue(),
         file_name="Informe_Delitos_Colombia_2021_2025.docx",
-        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    )
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    from docx import Document
-    from docx.shared import Pt
-    from docx.enum.text import WD_ALIGN_PARAGRAPH
-    from docx.shared import Inches
-    import matplotlib.pyplot as plt
-    import io
-
-    doc = Document()
-    # Título principal
-    title = doc.add_heading('INFORME DE GESTIÓN 2022-2025', 0)
-    title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    subtitle = doc.add_paragraph()
-    run = subtitle.add_run('Fiscalía General de la Nación')
-    run.bold = True
-    subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    # Análisis automático
-    total_delitos = sum(delitos_reportados)
-    total_casos = sum(delitos_cant)
-    ciudad_max = ciudades[delitos_reportados.index(max(delitos_reportados))]
-    ciudad_min = ciudades[delitos_reportados.index(min(delitos_reportados))]
-    delito_max = delitos[delitos_cant.index(max(delitos_cant))]
-    delito_min = delitos[delitos_cant.index(min(delitos_cant))]
-    ranking_ciudades = sorted(zip(ciudades, delitos_reportados), key=lambda x: x[1], reverse=True)
-    ranking_delitos = sorted(zip(delitos, delitos_cant), key=lambda x: x[1], reverse=True)
-
-    # Resumen
-    resumen = doc.add_paragraph()
-    resumen.add_run('Resumen Ejecutivo').bold = True
-    resumen.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    texto = doc.add_paragraph(
-        f"Durante el periodo 2020-2024, la Fiscalía General de la Nación gestionó un total de {total_delitos} delitos reportados en las principales ciudades del país. "
-        f"La ciudad con mayor incidencia fue {ciudad_max} ({max(delitos_reportados)} casos, {max(delitos_reportados)/total_delitos:.1%} del total), mientras que la de menor incidencia fue {ciudad_min} ({min(delitos_reportados)} casos, {min(delitos_reportados)/total_delitos:.1%}). "
-        "Los delitos más frecuentes fueron: " + ", ".join([f"{delito} ({cant})" for delito, cant in ranking_delitos]) + ". "
-        "El análisis de estos datos permite identificar tendencias y orientar estrategias institucionales para la prevención y judicialización de los delitos más relevantes."
-    )
-    texto.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-
-    # Sección institucional: Cartilla 5
-    cartilla_title = doc.add_paragraph()
-    run_cartilla = cartilla_title.add_run('CARTILLA 5: HERRAMIENTAS ANALÍTICAS PARA LA INVESTIGACIÓN Y EL EJERCICIO DE LA ACCIÓN PENAL')
-    run_cartilla.bold = True
-    cartilla_title.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    cartilla_text = (
-        "La política de priorización implica una aproximación analítica y rigurosa a la investigación y al ejercicio de la acción penal. Contribuye al planteamiento de hipótesis delictivas que puedan ser confirmadas o rechazadas a medida que avanza la investigación.\n\n"
-        "La resolución 1343 de 2014 establece actividades de priorización respecto a situaciones y casos: fijar un orden en el que serán atendidos; destinar más funcionarios y herramientas; agrupar e investigar casos asociados; aplicar herramientas analíticas en el trámite, investigación y judicialización; enfocar esfuerzos en ciertos casos o hechos delictivos y en algunos presuntos responsables. Tres de las seis actividades proponen el uso del análisis en contexto y la focalización de la investigación y la acción penal en hechos y responsables.\n\n"
-        "Esta cartilla presenta cinco herramientas analíticas para analistas criminales, fiscales, investigadores y asistentes de fiscal. Todas son de fácil uso, retoman la forma de analizar la información con la que cuenta la Fiscalía e indican fuentes que pueden contribuir a una investigación más integral. No reemplazan la labor investigativa de la policía judicial.\n\n"
-        "Las cinco herramientas parten de tres cambios metodológicos fundamentales:\n"
-        "1. Ampliar el foco de la investigación: reconocer que los hechos delictivos no ocurren de manera aislada sino que se explican por su contexto y plantear hipótesis de trabajo para ser confirmadas o rechazadas a través del análisis de la información y evidencia disponibles.\n"
-        "2. Disponer de diversas fuentes de información y ser riguroso con su uso: analizar elementos materiales probatorios (EMP), evidencia física (EF) e información de fuentes formales y no formales sobre los hechos y su contexto.\n"
-        "3. Utilizar otras disciplinas para explicar fenómenos criminales, situaciones y casos: incluir la aproximación de las ciencias sociales y exactas para comprender el delito e ilustrar la teoría del caso.\n\n"
-        "Las herramientas contribuyen a la toma de decisiones de priorización y facilitan el diseño de hipótesis criminales y estrategias de persecución en las diferentes etapas de la investigación, independientemente del régimen procesal. La identificación de fenómenos criminales y la delimitación de situaciones y asociación de casos permiten determinar relaciones entre investigaciones y delitos no denunciados, focalizar la atención en grupos de casos no aislados, distribuir eficazmente recursos y talento humano, y plantear la teoría del caso en etapas preliminares. Las otras tres herramientas aportan elementos para la caracterización de hechos delictivos y actores (víctimas y responsables), útiles en momentos posteriores de la investigación. Permiten focalizar decisiones sobre hechos y personas según criterios de priorización y alimentar la comprensión de la evidencia recolectada.\n\n"
-        "Las herramientas son:\n"
-        "- Identificación de fenómenos criminales y estudio de resultados.\n"
-        "- Delimitación de situación y asociación de casos.\n"
-        "- Caracterización de situaciones a partir de prácticas y patrones criminales.\n"
-        "- Caracterización de víctimas.\n"
-        "- Caracterización de estructuras criminales.\n\n"
-        "Estas herramientas permiten investigaciones integrales, rigurosas y estratégicas, orientadas a la priorización y judicialización efectiva."
-    )
-    cartilla_paragraph = doc.add_paragraph(cartilla_text)
-
-    # Guardar y descargar
-    buffer = BytesIO()
-    doc.save(buffer)
-    st.download_button(
-        label="Descargar Informe Word",
-        data=buffer.getvalue(),
-        file_name="Informe_Gestion_Fiscalia.docx",
         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
     st.markdown("</div>", unsafe_allow_html=True)
