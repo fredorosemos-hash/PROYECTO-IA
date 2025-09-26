@@ -179,7 +179,7 @@ with col2:
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Botón para descargar informe
-st.markdown("<div class='card'><div class='title'>Generar informe tipo Word</div>", unsafe_allow_html=True)
+st.markdown("<div class='card'><div class='title'>Generar informe</div>", unsafe_allow_html=True)
 if st.button("Descargar informe", key="neon-btn"):
     import random
     # Generar datos ficticios para 5 años, 5 ciudades, 4 delitos
