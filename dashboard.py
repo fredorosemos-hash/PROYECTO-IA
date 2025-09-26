@@ -61,10 +61,10 @@ body {
 }
 .title {
     font-family: 'Segoe UI', Arial, sans-serif;
-    font-size: 2rem;
+    font-size: 1.15rem;
     color: #002855;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 .subtitle {
     font-family: 'Segoe UI', Arial, sans-serif;
