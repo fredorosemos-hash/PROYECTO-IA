@@ -31,13 +31,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 st.image(LOGO_FISCALIA, width=220, caption="Fiscalía General de la Nación")
-st.image(LOGO_FISCALIA, width=220, caption="Fiscalía General de la Nación")
-st.markdown(f"""
-<div style='background-color:#002855;padding:10px 0 16px 0;text-align:center;'>
-        <h1 style='color:#fff;font-family:Segoe UI,Arial,sans-serif;font-size:2.7rem;margin:0;'>Fiscalía General de la Nación</h1>
-        <h2 style='color:#e30613;font-family:Segoe UI,Arial,sans-serif;font-size:1.4rem;margin:0;'>Dashboard de Ciberseguridad</h2>
-</div>
-""", unsafe_allow_html=True)
 
 # Datos de ejemplo
 ciudades = ['Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena']
