@@ -63,6 +63,35 @@ body {
 </style>
 """, unsafe_allow_html=True)
 with col1:
+    # Gráfico de barras por delitos en cada ciudad
+    st.markdown("<div class='card' style='text-align:center;'><div class='title'>Delitos por tipo y ciudad</div>", unsafe_allow_html=True)
+    # Datos de ejemplo para delitos por ciudad
+    delitos_ciudad = {
+        'Bogotá': [700, 300, 150, 50],
+        'Medellín': [500, 250, 150, 50],
+        'Cali': [400, 200, 150, 50],
+        'Barranquilla': [300, 200, 80, 20],
+        'Cartagena': [200, 100, 80, 20]
+    }
+    fig3, ax3 = plt.subplots(figsize=(6,3), facecolor='#fff')
+    width = 0.18
+    x = range(len(ciudades))
+    for i, delito in enumerate(delitos):
+        valores = [delitos_ciudad[ciudad][i] for ciudad in ciudades]
+        ax3.bar([p + i*width for p in x], valores, width=width, label=delito)
+    ax3.set_xticks([p + 1.5*width for p in x])
+    ax3.set_xticklabels(ciudades, fontsize=11, fontname='Arial')
+    ax3.set_ylabel('Cantidad', fontsize=12, fontweight='bold', fontname='Arial')
+    ax3.set_xlabel('Ciudad', fontsize=12, fontweight='bold', fontname='Arial')
+    ax3.set_title('Delitos por tipo y ciudad', color='#e30613', fontsize=14, fontweight='bold', fontname='Arial', pad=16)
+    ax3.legend(title="Delito", fontsize=9)
+    fig3.patch.set_facecolor('#fff')
+    ax3.spines['top'].set_visible(False)
+    ax3.spines['right'].set_visible(False)
+    ax3.spines['left'].set_color('#002855')
+    ax3.spines['bottom'].set_color('#002855')
+    st.pyplot(fig3, use_container_width=True)
+    st.markdown("</div>", unsafe_allow_html=True)
     st.markdown("<div class='card' style='text-align:center;'><div class='title'>Delitos por ciudad</div>", unsafe_allow_html=True)
     fig, ax = plt.subplots(figsize=(5,3), facecolor='#181c2b')
     bars = ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'], edgecolor='#fff', linewidth=1.2)
