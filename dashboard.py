@@ -39,7 +39,14 @@ try:
         """,
         unsafe_allow_html=True
     )
-    st.caption("Fiscalía General de la Nación")
+    st.markdown(
+        """
+        <div style='text-align:center;'>
+            <span style='font-weight:bold;font-size:1.2rem;text-transform:uppercase;'>FISCALÍA GENERAL DE LA NACIÓN</span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 except Exception:
     st.warning("No se pudo cargar el logo institucional. Verifique la URL o la conexión a internet.")
 
