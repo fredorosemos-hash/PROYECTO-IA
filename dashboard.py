@@ -22,7 +22,7 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # Encabezado institucional con logo Fiscalía
-LOGO_FISCALIA = "https://upload.wikimedia.org/wikipedia/commons/2/2e/Logo_Fiscalia_General_de_la_Nacion_Colombia.png"
+LOGO_FISCALIA = "https://raw.githubusercontent.com/fredorosemos-hash/PROYECTO-IA/main/assets/logo%20fgn.png"
 st.markdown("""
 <div style='width:100%;background:#e30613;padding:0;margin:0;'>
     <marquee behavior='scroll' direction='left' style='color:#fff;font-size:1.3rem;font-family:Segoe UI,Arial,sans-serif;font-weight:bold;padding:8px 0;'>
@@ -30,7 +30,10 @@ st.markdown("""
     </marquee>
 </div>
 """, unsafe_allow_html=True)
-st.image(LOGO_FISCALIA, width=220, caption="Fiscalía General de la Nación")
+try:
+    st.image(LOGO_FISCALIA, width=220, caption="Fiscalía General de la Nación")
+except Exception:
+    st.warning("No se pudo cargar el logo institucional. Verifique la URL o la conexión a internet.")
 
 # Datos de ejemplo
 ciudades = ['Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena']
