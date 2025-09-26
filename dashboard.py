@@ -169,30 +169,77 @@ with col2:
 # Botón para descargar informe
 st.markdown("<div class='card'><div class='title'>Generar informe tipo Word</div>", unsafe_allow_html=True)
 if st.button("Descargar informe", key="neon-btn"):
-    from docx import Document
-    doc = Document()
-    doc.add_heading('INFORME DE GESTIÓN 2022-2025', 0)
-    doc.add_paragraph('Fiscalía General de la Nación')
 
-    # Redacción automática con IA y análisis avanzado
+    from docx import Document
+    from docx.shared import Pt
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.shared import Inches
+    import matplotlib.pyplot as plt
+    import io
+
+    doc = Document()
+    # Título principal
+    title = doc.add_heading('INFORME DE GESTIÓN 2022-2025', 0)
+    title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    subtitle = doc.add_paragraph()
+    run = subtitle.add_run('Fiscalía General de la Nación')
+    run.bold = True
+    subtitle.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+    # Análisis automático
     total_delitos = sum(delitos_reportados)
     total_casos = sum(delitos_cant)
     ciudad_max = ciudades[delitos_reportados.index(max(delitos_reportados))]
     ciudad_min = ciudades[delitos_reportados.index(min(delitos_reportados))]
     delito_max = delitos[delitos_cant.index(max(delitos_cant))]
     delito_min = delitos[delitos_cant.index(min(delitos_cant))]
-
-    # Ranking de ciudades
     ranking_ciudades = sorted(zip(ciudades, delitos_reportados), key=lambda x: x[1], reverse=True)
     ranking_delitos = sorted(zip(delitos, delitos_cant), key=lambda x: x[1], reverse=True)
 
-    resumen = f"Durante el periodo 2020-2024, la Fiscalía General de la Nación gestionó un total de {total_delitos} delitos reportados en las principales ciudades del país. "
-    resumen += f"La ciudad con mayor incidencia fue {ciudad_max} ({max(delitos_reportados)} casos, {max(delitos_reportados)/total_delitos:.1%} del total), mientras que la de menor incidencia fue {ciudad_min} ({min(delitos_reportados)} casos, {min(delitos_reportados)/total_delitos:.1%}). "
-    resumen += "Los delitos más frecuentes fueron: " + ", ".join([f"{delito} ({cant})" for delito, cant in ranking_delitos]) + ". "
-    resumen += "El análisis de estos datos permite identificar tendencias y orientar estrategias institucionales para la prevención y judicialización de los delitos más relevantes."
-    doc.add_paragraph(resumen)
+    # Resumen
+    resumen = doc.add_paragraph()
+    resumen.add_run('Resumen Ejecutivo').bold = True
+    resumen.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    texto = doc.add_paragraph(
+        f"Durante el periodo 2020-2024, la Fiscalía General de la Nación gestionó un total de {total_delitos} delitos reportados en las principales ciudades del país. "
+        f"La ciudad con mayor incidencia fue {ciudad_max} ({max(delitos_reportados)} casos, {max(delitos_reportados)/total_delitos:.1%} del total), mientras que la de menor incidencia fue {ciudad_min} ({min(delitos_reportados)} casos, {min(delitos_reportados)/total_delitos:.1%}). "
+        "Los delitos más frecuentes fueron: " + ", ".join([f"{delito} ({cant})" for delito, cant in ranking_delitos]) + ". "
+        "El análisis de estos datos permite identificar tendencias y orientar estrategias institucionales para la prevención y judicialización de los delitos más relevantes."
+    )
+    texto.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
-    doc.add_paragraph('Ranking de ciudades por cantidad de delitos reportados:')
+    # Gráfico de barras: total de delitos por ciudad
+    fig, ax = plt.subplots(figsize=(5,3))
+    ax.bar(ciudades, delitos_reportados, color='#e30613', edgecolor='#002855', linewidth=1.5)
+    ax.set_ylabel('Cantidad', fontsize=12, fontweight='bold', fontname='Arial')
+    ax.set_xlabel('Ciudad', fontsize=12, fontweight='bold', fontname='Arial')
+    ax.set_title('Total de delitos por ciudad', fontsize=14, fontweight='bold', fontname='Arial', pad=16)
+    ax.tick_params(labelsize=11)
+    for i, v in enumerate(delitos_reportados):
+        ax.text(i, v + 20, str(v), ha='center', va='bottom', color='#e30613', fontweight='bold', fontsize=11)
+    fig.tight_layout()
+    img_stream = io.BytesIO()
+    fig.savefig(img_stream, format='png')
+    img_stream.seek(0)
+    doc.add_picture(img_stream, width=Inches(5.5))
+    plt.close(fig)
+
+    # Gráfico de torta: distribución de delitos
+    fig2, ax2 = plt.subplots(figsize=(3,3))
+    wedges, texts, autotexts = ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'], wedgeprops={'edgecolor':'#fff','linewidth':1.2}, startangle=90)
+    ax2.set_title('Distribución de Delitos', fontsize=10, fontweight='bold', fontname='Arial')
+    fig2.tight_layout()
+    img_stream2 = io.BytesIO()
+    fig2.savefig(img_stream2, format='png')
+    img_stream2.seek(0)
+    doc.add_picture(img_stream2, width=Inches(3.5))
+    plt.close(fig2)
+
+    # Ranking de ciudades
+    par = doc.add_paragraph()
+    par.add_run('Ranking de ciudades por cantidad de delitos reportados:').bold = True
+    par.alignment = WD_ALIGN_PARAGRAPH.CENTER
     table = doc.add_table(rows=1, cols=3)
     hdr_cells = table.rows[0].cells
     hdr_cells[0].text = 'Posición'
@@ -204,7 +251,9 @@ if st.button("Descargar informe", key="neon-btn"):
         row_cells[1].text = ciudad
         row_cells[2].text = str(cantidad)
 
-    doc.add_paragraph('Ranking de delitos por frecuencia:')
+    par2 = doc.add_paragraph()
+    par2.add_run('Ranking de delitos por frecuencia:').bold = True
+    par2.alignment = WD_ALIGN_PARAGRAPH.CENTER
     table2 = doc.add_table(rows=1, cols=3)
     hdr2 = table2.rows[0].cells
     hdr2[0].text = 'Posición'
@@ -216,13 +265,19 @@ if st.button("Descargar informe", key="neon-btn"):
         row_cells[1].text = delito
         row_cells[2].text = str(cant)
 
-    doc.add_paragraph('Distribución porcentual de delitos por ciudad:')
+    par3 = doc.add_paragraph()
+    par3.add_run('Distribución porcentual de delitos por ciudad:').bold = True
+    par3.alignment = WD_ALIGN_PARAGRAPH.CENTER
     for ciudad, cantidad in ranking_ciudades:
-        doc.add_paragraph(f"- {ciudad}: {cantidad} casos ({cantidad/total_delitos:.1%})")
+        p = doc.add_paragraph(f"- {ciudad}: {cantidad} casos ({cantidad/total_delitos:.1%})")
+        p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
-    doc.add_paragraph('Distribución porcentual de delitos por tipo:')
+    par4 = doc.add_paragraph()
+    par4.add_run('Distribución porcentual de delitos por tipo:').bold = True
+    par4.alignment = WD_ALIGN_PARAGRAPH.CENTER
     for delito, cant in ranking_delitos:
-        doc.add_paragraph(f"- {delito}: {cant} casos ({cant/total_casos:.1%})")
+        p = doc.add_paragraph(f"- {delito}: {cant} casos ({cant/total_casos:.1%})")
+        p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
     # Recomendaciones automáticas
     recomendaciones = []
@@ -232,12 +287,16 @@ if st.button("Descargar informe", key="neon-btn"):
         recomendaciones.append(f"El delito de mayor frecuencia es {delito_max}, representando más del 50% de los casos. Es prioritario fortalecer acciones preventivas y de investigación en este tipo de delito.")
     if not recomendaciones:
         recomendaciones.append("La distribución de delitos es relativamente equilibrada entre ciudades y tipos, se recomienda mantener el monitoreo y ajustar estrategias según nuevas tendencias.")
-    doc.add_paragraph('Recomendaciones automáticas:')
+    par5 = doc.add_paragraph()
+    par5.add_run('Recomendaciones automáticas:').bold = True
+    par5.alignment = WD_ALIGN_PARAGRAPH.CENTER
     for rec in recomendaciones:
-        doc.add_paragraph(f"- {rec}")
+        p = doc.add_paragraph(f"- {rec}")
+        p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
-    conclusion = f"En conclusión, el periodo analizado evidencia que {ciudad_max} requiere especial atención por su alta incidencia delictiva, mientras que el delito más frecuente es {delito_max}. La Fiscalía continuará fortaleciendo sus capacidades investigativas y preventivas para mejorar la seguridad ciudadana."
-    doc.add_paragraph(conclusion)
+    conclusion = doc.add_paragraph()
+    conclusion.add_run(f"En conclusión, el periodo analizado evidencia que {ciudad_max} requiere especial atención por su alta incidencia delictiva, mientras que el delito más frecuente es {delito_max}. La Fiscalía continuará fortaleciendo sus capacidades investigativas y preventivas para mejorar la seguridad ciudadana.").bold = True
+    conclusion.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
     # Guardar y descargar
     buffer = BytesIO()
@@ -248,4 +307,4 @@ if st.button("Descargar informe", key="neon-btn"):
         file_name="Informe_Gestion_Fiscalia.docx",
         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
-st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
