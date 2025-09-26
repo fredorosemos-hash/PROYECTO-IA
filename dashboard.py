@@ -65,6 +65,8 @@ body {
     color: #002855;
     font-weight: bold;
     margin-bottom: 6px;
+    text-transform: uppercase;
+    text-align: center;
 }
 .subtitle {
     font-family: 'Segoe UI', Arial, sans-serif;
