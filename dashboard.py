@@ -7,12 +7,9 @@ import pandas as pd
 from io import BytesIO
 from docx import Document
 
-LOGO_URL = "https://www.policia.gov.co/sites/default/files/escudo_policia_nacional.png"
-
-# Encabezado institucional
-st.markdown(f"""
+# Encabezado institucional sin logo
+st.markdown("""
 <div style='background-color:#006837;padding:18px 0 12px 0;text-align:center;'>
-    <img src='{LOGO_URL}' alt='Logo Policía Nacional' style='height:80px;margin-bottom:8px;'>
     <h1 style='color:#fff;font-family:Segoe UI,Arial,sans-serif;font-size:2.5rem;margin:0;'>Fiscalía General de la Nación</h1>
     <h2 style='color:#ffe600;font-family:Segoe UI,Arial,sans-serif;font-size:1.3rem;margin:0;'>Dashboard de Ciberseguridad</h2>
 </div>
