@@ -17,9 +17,11 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-# Encabezado institucional estilo Fiscalía
-st.markdown("""
+# Encabezado institucional con logo Fiscalía
+LOGO_FISCALIA = "https://www.fiscalia.gov.co/colombia/wp-content/themes/fiscalia/images/logo.png"
+st.markdown(f"""
 <div style='background-color:#002855;padding:22px 0 16px 0;text-align:center;'>
+    <img src='{LOGO_FISCALIA}' alt='Logo Fiscalía' style='height:70px;margin-bottom:8px;'>
     <h1 style='color:#fff;font-family:Segoe UI,Arial,sans-serif;font-size:2.7rem;margin:0;'>Fiscalía General de la Nación</h1>
     <h2 style='color:#e30613;font-family:Segoe UI,Arial,sans-serif;font-size:1.4rem;margin:0;'>Dashboard de Ciberseguridad</h2>
 </div>
