@@ -54,11 +54,11 @@ st.markdown(
 
 st.markdown(
     """
-    <div class='neon-box' style='display:flex;align-items:center;'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Fiscalia_General_de_la_Nacion_de_Colombia_logo.png' width='70' style='margin-right:18px;filter:drop-shadow(0 0 8px #00eaff);'>
+    <div class='neon-box' style='display:flex;align-items:center;justify-content:center;'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Fiscalia_General_de_la_Nacion_de_Colombia_logo.png' width='60' style='margin-right:16px;filter:drop-shadow(0 0 8px #00eaff);'>
         <div>
-            <h1 class='neon-title'>INFORME DE GESTIÓN 2020-2024</h1>
-            <h3 class='neon-sub'>Fiscalía General de la Nación</h3>
+            <h1 class='neon-title' style='text-align:center;'>INFORME DE GESTIÓN 2020-2024</h1>
+            <h3 class='neon-sub' style='text-align:center;'>Fiscalía General de la Nación</h3>
         </div>
     </div>
     """,
@@ -89,12 +89,11 @@ if data_file:
         delitos = df['delito'].tolist()
         delitos_cant = df['cantidad'].tolist()
 
-# Organización en columnas futuristas
-col1, col2 = st.columns([2,2])
+col1, col2 = st.columns([3,2])
 
 with col1:
     st.markdown("<div class='neon-box'><h2 class='neon-title'>Delitos por ciudad</h2>", unsafe_allow_html=True)
-    fig, ax = plt.subplots(figsize=(4.5,2.8), facecolor='#0f2027')
+    fig, ax = plt.subplots(figsize=(5.5,3.5), facecolor='#0f2027')
     ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'])
     ax.set_ylabel('Cantidad', color='#fff')
     ax.set_xlabel('Ciudad', color='#fff')
@@ -104,7 +103,7 @@ with col1:
     st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("<div class='neon-box'><h2 class='neon-title'>Distribución de delitos</h2>", unsafe_allow_html=True)
-    fig2, ax2 = plt.subplots(figsize=(3.5,3.5), facecolor='#0f2027')
+    fig2, ax2 = plt.subplots(figsize=(4.2,4.2), facecolor='#0f2027')
     ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'])
     fig2.patch.set_facecolor('#0f2027')
     st.pyplot(fig2, use_container_width=True)
@@ -123,7 +122,7 @@ with col2:
     for ciudad, cantidad in zip(ciudades, delitos_reportados):
         if ciudad in coords:
             folium.Marker(coords[ciudad], popup=f"{ciudad}: {cantidad} delitos").add_to(mapa)
-    st_folium(mapa, width=450, height=260)
+    st_folium(mapa, width=370, height=220)
     st.markdown("</div>", unsafe_allow_html=True)
 
 # Botón para descargar informe
