@@ -95,16 +95,22 @@ with col1:
     st.markdown("<div class='neon-box'><h2 class='neon-title'>Delitos por ciudad</h2>", unsafe_allow_html=True)
     fig, ax = plt.subplots(figsize=(2,1.2), facecolor='#0f2027')
     ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'])
-    ax.set_ylabel('Cantidad', color='#fff')
-    ax.set_xlabel('Ciudad', color='#fff')
-    ax.tick_params(colors='#00eaff')
+    ax.set_ylabel('Cantidad', color='#fff', fontsize=8)
+    ax.set_xlabel('Ciudad', color='#fff', fontsize=8)
+    ax.tick_params(colors='#00eaff', labelsize=7)
+    for label in ax.get_xticklabels() + ax.get_yticklabels():
+        label.set_fontsize(7)
     fig.patch.set_facecolor('#0f2027')
     st.pyplot(fig, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("<div class='neon-box'><h2 class='neon-title'>Distribución de delitos</h2>", unsafe_allow_html=True)
     fig2, ax2 = plt.subplots(figsize=(1.2,1.2), facecolor='#0f2027')
-    ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'])
+    wedges, texts, autotexts = ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'])
+    for text in texts:
+        text.set_fontsize(7)
+    for autotext in autotexts:
+        autotext.set_fontsize(7)
     fig2.patch.set_facecolor('#0f2027')
     st.pyplot(fig2, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
