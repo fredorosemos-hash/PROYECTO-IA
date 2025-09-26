@@ -1,3 +1,12 @@
+
+import streamlit as st
+import matplotlib.pyplot as plt
+import folium
+from streamlit_folium import st_folium
+import pandas as pd
+from io import BytesIO
+from docx import Document
+
 LOGO_URL = "https://www.policia.gov.co/sites/default/files/escudo_policia_nacional.png"
 
 # Encabezado institucional
@@ -8,13 +17,6 @@ st.markdown(f"""
     <h2 style='color:#ffe600;font-family:Segoe UI,Arial,sans-serif;font-size:1.3rem;margin:0;'>Dashboard de Ciberseguridad</h2>
 </div>
 """, unsafe_allow_html=True)
-import streamlit as st
-import matplotlib.pyplot as plt
-import folium
-from streamlit_folium import st_folium
-import pandas as pd
-from io import BytesIO
-from docx import Document
 
 # Datos de ejemplo
 ciudades = ['Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena']
