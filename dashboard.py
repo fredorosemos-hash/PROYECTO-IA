@@ -26,7 +26,11 @@ st.markdown("""
     </marquee>
 </div>
 """, unsafe_allow_html=True)
-st.image(LOGO_FISCALIA, width=220)
+st.markdown(f"""
+<div style='background:#fff; border:2px solid #e30613; border-radius:12px; width:240px; margin:18px auto 10px auto; padding:10px;'>
+    <img src='{LOGO_FISCALIA}' alt='Logo Fiscalía' style='width:220px; display:block; margin:auto;'>
+</div>
+""", unsafe_allow_html=True)
 st.markdown(f"""
 <div style='background-color:#002855;padding:10px 0 16px 0;text-align:center;'>
         <h1 style='color:#fff;font-family:Segoe UI,Arial,sans-serif;font-size:2.7rem;margin:0;'>Fiscalía General de la Nación</h1>
