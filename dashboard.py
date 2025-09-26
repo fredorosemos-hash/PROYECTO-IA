@@ -28,101 +28,61 @@ st.markdown(
     .neon-title {
         font-family: 'Orbitron', 'Segoe UI', sans-serif;
         font-size: 2.5rem;
-        color: #00eaff;
-        text-shadow: 0 0 12px #00eaff, 0 0 4px #fff;
-        margin-bottom: 0;
-    }
-    .neon-sub {
-        font-size: 1.2rem;
-        color: #ffb700;
-        text-shadow: 0 0 8px #ffb700;
-        margin-top: 0;
-    }
-    .neon-btn button {
-        background: linear-gradient(90deg, #00eaff 0%, #ff3b3b 100%);
-        color: #fff;
-        border-radius: 12px;
-        border: none;
-        font-weight: bold;
-        box-shadow: 0 0 8px #00eaff;
-    }
-    </style>
-    <link href="https://fonts.googleapis.com/css?family=Orbitron:700" rel="stylesheet">
-    """,
-    unsafe_allow_html=True
-)
+        with col1:
+            st.markdown("<div class='neon-box' style='text-align:center;'><h2 class='neon-title'>Delitos por ciudad</h2>", unsafe_allow_html=True)
+            fig, ax = plt.subplots(figsize=(5,3), facecolor='#181c2b')
+            bars = ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'], edgecolor='#fff', linewidth=1.2)
+            ax.set_ylabel('Cantidad', color='#00eaff', fontsize=12, fontweight='bold', fontname='Arial')
+            ax.set_xlabel('Ciudad', color='#00eaff', fontsize=12, fontweight='bold', fontname='Arial')
+            ax.set_title('Delitos por Ciudad', color='#ffb700', fontsize=14, fontweight='bold', fontname='Arial', pad=16)
+            ax.tick_params(colors='#fff', labelsize=11)
+            for label in ax.get_xticklabels() + ax.get_yticklabels():
+                label.set_fontsize(11)
+                label.set_fontname('Arial')
+            fig.patch.set_facecolor('#181c2b')
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+            ax.spines['left'].set_color('#00eaff')
+            ax.spines['bottom'].set_color('#00eaff')
+            # Etiquetas de valores sobre las barras
+            for bar in bars:
+                ax.annotate(f'{bar.get_height()}',
+                            xy=(bar.get_x() + bar.get_width() / 2, bar.get_height()),
+                            xytext=(0, 6),
+                            textcoords="offset points",
+                            ha='center', va='bottom', color='#fff', fontsize=11, fontweight='bold')
+            st.pyplot(fig, use_container_width=True)
+            st.markdown("</div>", unsafe_allow_html=True)
 
-st.markdown(
-    """
-    <div class='neon-box' style='display:flex;align-items:center;justify-content:center;'>
-        <img src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Fiscalia_General_de_la_Nacion_de_Colombia_logo.png' width='40' style='margin-right:10px;filter:drop-shadow(0 0 6px #00eaff);'>
-        <div>
-            <h1 class='neon-title' style='text-align:center;'>INFORME DE GESTIÓN 2022-2025</h1>
-            <h3 class='neon-sub' style='text-align:center;'>Fiscalía General de la Nación</h3>
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-
-# Carga de datos (sin panel lateral)
-st.markdown("<div class='neon-box' style='margin-bottom:16px;'><h3 class='neon-sub'>Carga de datos</h3>", unsafe_allow_html=True)
-data_file = st.file_uploader("Sube un archivo CSV o JSON", type=["csv", "json"])
-st.markdown("</div>", unsafe_allow_html=True)
-
-# Datos por defecto
-ciudades = ['Bogotá', 'Medellín', 'Cali', 'Barranquilla', 'Cartagena']
-delitos_reportados = [120, 90, 70, 50, 40]
-delitos = ['Hurto', 'Homicidio', 'Fraude', 'Secuestro']
-delitos_cant = [60, 25, 10, 5]
-
-if data_file:
-    if data_file.name.endswith('.csv'):
-        df = pd.read_csv(data_file)
-    else:
-        df = pd.read_json(data_file)
-    if 'ciudad' in df.columns and 'cantidad' in df.columns:
-        ciudades = df['ciudad'].tolist()
-        delitos_reportados = df['cantidad'].tolist()
-    if 'delito' in df.columns and 'cantidad' in df.columns:
-        delitos = df['delito'].tolist()
-        delitos_cant = df['cantidad'].tolist()
-
-col1, col2 = st.columns([3,2])
-
-with col1:
-    st.markdown("<div class='neon-box'><h2 class='neon-title'>Delitos por ciudad</h2>", unsafe_allow_html=True)
-    fig, ax = plt.subplots(figsize=(2.4,1.5), facecolor='#181c2b')
-    bars = ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'], edgecolor='#fff', linewidth=1.2)
-    ax.set_ylabel('Cantidad', color='#00eaff', fontsize=9, fontweight='bold', fontname='Arial')
-    ax.set_xlabel('Ciudad', color='#00eaff', fontsize=9, fontweight='bold', fontname='Arial')
-    ax.set_title('Delitos por Ciudad', color='#ffb700', fontsize=10, fontweight='bold', fontname='Arial')
-    ax.tick_params(colors='#fff', labelsize=8)
-    for label in ax.get_xticklabels() + ax.get_yticklabels():
-        label.set_fontsize(8)
-        label.set_fontname('Arial')
-    fig.patch.set_facecolor('#181c2b')
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_color('#00eaff')
-    ax.spines['bottom'].set_color('#00eaff')
-    # Etiquetas de valores sobre las barras
-    for bar in bars:
-        ax.annotate(f'{bar.get_height()}',
-                    xy=(bar.get_x() + bar.get_width() / 2, bar.get_height()),
-                    xytext=(0, 4),
-                    textcoords="offset points",
-                    ha='center', va='bottom', color='#fff', fontsize=8, fontweight='bold')
-    st.pyplot(fig, use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown("<div class='neon-box'><h2 class='neon-title'>Distribución de delitos</h2>", unsafe_allow_html=True)
-    fig2, ax2 = plt.subplots(figsize=(1.5,1.5), facecolor='#181c2b')
-    wedges, texts, autotexts = ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'], wedgeprops={'edgecolor':'#fff','linewidth':1.2}, startangle=90)
-    for text in texts:
-        text.set_fontsize(8)
-        text.set_color('#00eaff')
+            st.markdown("<div class='neon-box' style='text-align:center;'><h2 class='neon-title'>Distribución de delitos</h2>", unsafe_allow_html=True)
+            fig2, ax2 = plt.subplots(figsize=(3,3), facecolor='#181c2b')
+            wedges, texts, autotexts = ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'], wedgeprops={'edgecolor':'#fff','linewidth':1.2}, startangle=90)
+            for text in texts:
+                text.set_fontsize(11)
+                st.markdown(
+                    """
+                    <style>
+                    body, .stApp {
+                        background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+                        color: #fff;
+                    }
+                    .neon-box {
+                        background: rgba(20,30,40,0.85);
+                        border-radius: 18px;
+                        box-shadow: 0 0 24px #00eaff, 0 0 8px #ff3b3b;
+                        padding: 32px 24px;
+                        margin-bottom: 32px;
+                        border: 2px solid #00eaff;
+                    }
+                    .neon-title {
+                        font-family: 'Orbitron', 'Segoe UI', sans-serif;
+                        font-size: 2.5rem;
+                    }
+                    </style>
+                    <link href="https://fonts.googleapis.com/css?family=Orbitron:700" rel="stylesheet">
+                    """,
+                    unsafe_allow_html=True
+                )
         text.set_fontname('Arial')
     for autotext in autotexts:
         autotext.set_fontsize(8)
