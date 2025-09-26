@@ -18,7 +18,7 @@ with st.sidebar:
     """, unsafe_allow_html=True)
 
 # Encabezado institucional con logo Fiscalía
-LOGO_FISCALIA = "https://www.fiscalia.gov.co/colombia/wp-content/themes/fiscalia/images/logo.png"
+LOGO_FISCALIA = "https://upload.wikimedia.org/wikipedia/commons/2/2e/Logo_Fiscalia_General_de_la_Nacion_Colombia.png"
 st.markdown(f"""
 <div style='background-color:#002855;padding:22px 0 16px 0;text-align:center;'>
     <img src='{LOGO_FISCALIA}' alt='Logo Fiscalía' style='height:70px;margin-bottom:8px;'>
