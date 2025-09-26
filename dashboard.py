@@ -31,7 +31,15 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 try:
-    st.image(LOGO_FISCALIA, width=220, caption="Fiscalía General de la Nación")
+    st.markdown(
+        f"""
+        <div style='display:flex;justify-content:center;align-items:center;'>
+            <img src='{LOGO_FISCALIA}' width='220' alt='Fiscalía General de la Nación'/>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    st.caption("Fiscalía General de la Nación")
 except Exception:
     st.warning("No se pudo cargar el logo institucional. Verifique la URL o la conexión a internet.")
 
