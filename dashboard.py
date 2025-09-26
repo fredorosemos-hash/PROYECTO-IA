@@ -1,3 +1,5 @@
+
+
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -6,12 +8,66 @@ from streamlit_folium import st_folium
 from io import BytesIO
 
 st.set_page_config(page_title="Dashboard Fiscalía", layout="wide")
-st.title("INFORME DE GESTIÓN 2020-2024 - Fiscalía General de la Nación")
 
-# Logo
-st.image("https://upload.wikimedia.org/wikipedia/commons/2/2e/Fiscalia_General_de_la_Nacion_de_Colombia_logo.png", width=150)
+# Estilos CSS cibernéticos futuristas
+st.markdown(
+    """
+    <style>
+    body, .stApp {
+        background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+        color: #fff;
+    }
+    .neon-box {
+        background: rgba(20,30,40,0.85);
+        border-radius: 18px;
+        box-shadow: 0 0 24px #00eaff, 0 0 8px #ff3b3b;
+        padding: 32px 24px;
+        margin-bottom: 32px;
+        border: 2px solid #00eaff;
+    }
+    .neon-title {
+        font-family: 'Orbitron', 'Segoe UI', sans-serif;
+        font-size: 2.5rem;
+        color: #00eaff;
+        text-shadow: 0 0 12px #00eaff, 0 0 4px #fff;
+        margin-bottom: 0;
+    }
+    .neon-sub {
+        font-size: 1.2rem;
+        color: #ffb700;
+        text-shadow: 0 0 8px #ffb700;
+        margin-top: 0;
+    }
+    .neon-btn button {
+        background: linear-gradient(90deg, #00eaff 0%, #ff3b3b 100%);
+        color: #fff;
+        border-radius: 12px;
+        border: none;
+        font-weight: bold;
+        box-shadow: 0 0 8px #00eaff;
+    }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Orbitron:700" rel="stylesheet">
+    """,
+    unsafe_allow_html=True
+)
 
-# Carga de datos
+# Banner superior
+st.markdown(
+    """
+    <div class='neon-box' style='display:flex;align-items:center;'>
+        <img src='https://upload.wikimedia.org/wikipedia/commons/2/2e/Fiscalia_General_de_la_Nacion_de_Colombia_logo.png' width='110' style='margin-right:30px;filter:drop-shadow(0 0 12px #00eaff);'>
+        <div>
+            <h1 class='neon-title'>INFORME DE GESTIÓN 2020-2024</h1>
+            <h3 class='neon-sub'>Fiscalía General de la Nación</h3>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+# Barra lateral futurista
+st.sidebar.markdown("<h2 style='color:#00eaff;font-family:Orbitron;'>Panel de opciones</h2>", unsafe_allow_html=True)
 st.sidebar.header("Carga de datos")
 data_file = st.sidebar.file_uploader("Sube un archivo CSV o JSON", type=["csv", "json"])
 
@@ -33,38 +89,46 @@ if data_file:
         delitos = df['delito'].tolist()
         delitos_cant = df['cantidad'].tolist()
 
-# Gráfico de barras
-st.subheader("Delitos reportados por ciudad")
-fig, ax = plt.subplots()
-ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'])
-ax.set_ylabel('Cantidad')
-ax.set_xlabel('Ciudad')
-st.pyplot(fig)
+# Organización en columnas futuristas
+col1, col2 = st.columns([2,2])
 
-# Gráfico de torta
-st.subheader("Distribución de delitos")
-fig2, ax2 = plt.subplots()
-ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'])
-st.pyplot(fig2)
+with col1:
+    st.markdown("<div class='neon-box'><h2 class='neon-title'>Delitos por ciudad</h2>", unsafe_allow_html=True)
+    fig, ax = plt.subplots(facecolor='#0f2027')
+    ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'])
+    ax.set_ylabel('Cantidad', color='#fff')
+    ax.set_xlabel('Ciudad', color='#fff')
+    ax.tick_params(colors='#00eaff')
+    fig.patch.set_facecolor('#0f2027')
+    st.pyplot(fig)
+    st.markdown("</div>", unsafe_allow_html=True)
 
-# Mapa de Colombia
-st.subheader("Mapa de delitos por ciudad")
-coords = {
-    'Bogotá': [4.7110, -74.0721],
-    'Medellín': [6.2442, -75.5812],
-    'Cali': [3.4516, -76.5320],
-    'Barranquilla': [10.9685, -74.7813],
-    'Cartagena': [10.3910, -75.4794]
-}
-mapa = folium.Map(location=[4.5709, -74.2973], zoom_start=5)
-for ciudad, cantidad in zip(ciudades, delitos_reportados):
-    if ciudad in coords:
-        folium.Marker(coords[ciudad], popup=f"{ciudad}: {cantidad} delitos").add_to(mapa)
-st_folium(mapa, width=700, height=400)
+    st.markdown("<div class='neon-box'><h2 class='neon-title'>Distribución de delitos</h2>", unsafe_allow_html=True)
+    fig2, ax2 = plt.subplots(facecolor='#0f2027')
+    ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'])
+    fig2.patch.set_facecolor('#0f2027')
+    st.pyplot(fig2)
+    st.markdown("</div>", unsafe_allow_html=True)
+
+with col2:
+    st.markdown("<div class='neon-box'><h2 class='neon-title'>Mapa de delitos por ciudad</h2>", unsafe_allow_html=True)
+    coords = {
+        'Bogotá': [4.7110, -74.0721],
+        'Medellín': [6.2442, -75.5812],
+        'Cali': [3.4516, -76.5320],
+        'Barranquilla': [10.9685, -74.7813],
+        'Cartagena': [10.3910, -75.4794]
+    }
+    mapa = folium.Map(location=[4.5709, -74.2973], zoom_start=5)
+    for ciudad, cantidad in zip(ciudades, delitos_reportados):
+        if ciudad in coords:
+            folium.Marker(coords[ciudad], popup=f"{ciudad}: {cantidad} delitos").add_to(mapa)
+    st_folium(mapa, width=700, height=400)
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # Botón para descargar informe
-st.subheader("Generar informe tipo Word")
-if st.button("Descargar informe"):
+st.markdown("<div class='neon-box'><h2 class='neon-title'>Generar informe tipo Word</h2>", unsafe_allow_html=True)
+if st.button("Descargar informe", key="neon-btn"):
     from docx import Document
     doc = Document()
     doc.add_heading('INFORME DE GESTIÓN 2020-2024', 0)
@@ -91,3 +155,4 @@ if st.button("Descargar informe"):
         file_name="Informe_Gestion_Fiscalia.docx",
         mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     )
+st.markdown("</div>", unsafe_allow_html=True)
