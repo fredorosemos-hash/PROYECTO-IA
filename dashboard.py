@@ -93,25 +93,45 @@ col1, col2 = st.columns([3,2])
 
 with col1:
     st.markdown("<div class='neon-box'><h2 class='neon-title'>Delitos por ciudad</h2>", unsafe_allow_html=True)
-    fig, ax = plt.subplots(figsize=(2,1.2), facecolor='#0f2027')
-    ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'])
-    ax.set_ylabel('Cantidad', color='#fff', fontsize=8)
-    ax.set_xlabel('Ciudad', color='#fff', fontsize=8)
-    ax.tick_params(colors='#00eaff', labelsize=7)
+    fig, ax = plt.subplots(figsize=(2.4,1.5), facecolor='#181c2b')
+    bars = ax.bar(ciudades, delitos_reportados, color=['#00eaff','#ffb700','#ff3b3b','#00ffae','#2c5364'], edgecolor='#fff', linewidth=1.2)
+    ax.set_ylabel('Cantidad', color='#00eaff', fontsize=9, fontweight='bold', fontname='Arial')
+    ax.set_xlabel('Ciudad', color='#00eaff', fontsize=9, fontweight='bold', fontname='Arial')
+    ax.set_title('Delitos por Ciudad', color='#ffb700', fontsize=10, fontweight='bold', fontname='Arial')
+    ax.tick_params(colors='#fff', labelsize=8)
     for label in ax.get_xticklabels() + ax.get_yticklabels():
-        label.set_fontsize(7)
-    fig.patch.set_facecolor('#0f2027')
+        label.set_fontsize(8)
+        label.set_fontname('Arial')
+    fig.patch.set_facecolor('#181c2b')
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_color('#00eaff')
+    ax.spines['bottom'].set_color('#00eaff')
+    # Etiquetas de valores sobre las barras
+    for bar in bars:
+        ax.annotate(f'{bar.get_height()}',
+                    xy=(bar.get_x() + bar.get_width() / 2, bar.get_height()),
+                    xytext=(0, 4),
+                    textcoords="offset points",
+                    ha='center', va='bottom', color='#fff', fontsize=8, fontweight='bold')
     st.pyplot(fig, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("<div class='neon-box'><h2 class='neon-title'>Distribución de delitos</h2>", unsafe_allow_html=True)
-    fig2, ax2 = plt.subplots(figsize=(1.2,1.2), facecolor='#0f2027')
-    wedges, texts, autotexts = ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'])
+    fig2, ax2 = plt.subplots(figsize=(1.5,1.5), facecolor='#181c2b')
+    wedges, texts, autotexts = ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'], wedgeprops={'edgecolor':'#fff','linewidth':1.2}, startangle=90)
     for text in texts:
-        text.set_fontsize(7)
+        text.set_fontsize(8)
+        text.set_color('#00eaff')
+        text.set_fontname('Arial')
     for autotext in autotexts:
-        autotext.set_fontsize(7)
-    fig2.patch.set_facecolor('#0f2027')
+        autotext.set_fontsize(8)
+        autotext.set_color('#ffb700')
+        autotext.set_fontname('Arial')
+    fig2.patch.set_facecolor('#181c2b')
+    ax2.set_title('Distribución de Delitos', color='#ffb700', fontsize=10, fontweight='bold', fontname='Arial')
+    # Leyenda fuera del gráfico
+    ax2.legend(wedges, delitos, title="Delitos", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), fontsize=7)
     st.pyplot(fig2, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
