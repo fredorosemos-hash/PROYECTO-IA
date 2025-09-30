@@ -26,6 +26,7 @@ with st.sidebar:
         <a href='https://www.procuraduria.gov.co/' target='_blank'><button class='btn' style='width:100%;margin-bottom:12px;'>Procuraduría</button></a>
         <a href='https://www.mintic.gov.co/' target='_blank'><button class='btn' style='width:100%;margin-bottom:12px;'>MinTIC</button></a>
         <a href='https://www.fiscalia.gov.co/colombia/' target='_blank'><button class='btn' style='width:100%;margin-bottom:12px;'>Fiscalía</button></a>
+        <a href='https://pagina-busqueda-ia.streamlit.app/' target='_blank'><button class='btn' style='width:100%;margin-bottom:12px;background-color:#002855;'>ANÁLISIS DE ARCHIVO CSV - ANÁLISIS DEL DELITO</button></a>
     </div>
     """, unsafe_allow_html=True)
 
