@@ -189,11 +189,16 @@ coords = {
     'Barranquilla': [10.9685, -74.7813],
     'Cartagena': [10.3910, -75.4794]
 }
-mapa = folium.Map(location=[4.5709, -74.2973], zoom_start=5)
+mapa = folium.Map(location=[4.5709, -74.2973], zoom_start=6)
 for ciudad, cantidad in zip(ciudades, delitos_reportados):
     if ciudad in coords:
-        folium.Marker(coords[ciudad], popup=f"{ciudad}: {cantidad} delitos").add_to(mapa)
-st_folium(mapa, width=None, height=400)
+        folium.Marker(
+            coords[ciudad], 
+            popup=folium.Popup(f"<b>{ciudad}</b><br>{cantidad} delitos reportados", max_width=200),
+            tooltip=f"{ciudad}: {cantidad} delitos",
+            icon=folium.Icon(color='red', icon='info-sign')
+        ).add_to(mapa)
+st_folium(mapa, width=700, height=400, returned_objects=["last_clicked"])
 st.markdown("</div>", unsafe_allow_html=True)
 
 # Botón para descargar informe
