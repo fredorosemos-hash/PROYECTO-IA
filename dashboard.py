@@ -11,6 +11,14 @@ from docx import Document
 from docx.shared import Pt, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
+# Configurar la página para usar ancho completo
+st.set_page_config(
+    page_title="Dashboard Fiscalía General de la Nación",
+    page_icon="⚖️",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 with st.sidebar:
     st.markdown("""
     <div style='margin-top:30px;'>
@@ -56,12 +64,17 @@ delitos_reportados = [1200, 950, 800, 600, 400]
 delitos = ['Hurto', 'Homicidio', 'Estafa', 'Secuestro']
 delitos_cant = [1800, 700, 500, 250]
 
-# Layout de columnas
-col1, col2 = st.columns([2,2])
+# Layout de columnas con mejor distribución
+col1, col2, col3 = st.columns([1, 1, 1])
 st.markdown("""
 <style>
 body {
     background: #e0e0e0;
+}
+.main .block-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: none;
 }
 .card {
     background: #fff;
@@ -70,6 +83,7 @@ body {
     border: 2px solid #e30613;
     padding: 18px 16px 12px 16px;
     margin-bottom: 28px;
+    width: 100%;
 }
 .title {
     font-family: 'Segoe UI', Arial, sans-serif;
@@ -97,12 +111,13 @@ body {
     cursor: pointer;
     margin-top: 10px;
 }
+}
 </style>
 """, unsafe_allow_html=True)
 with col1:
     # Gráfico de barras: total de delitos por ciudad
     st.markdown("<div class='card' style='text-align:center;'><div class='title'>Total de delitos por ciudad</div>", unsafe_allow_html=True)
-    fig_total, ax_total = plt.subplots(figsize=(5,3), facecolor='#fff')
+    fig_total, ax_total = plt.subplots(figsize=(6,4), facecolor='#fff')
     ax_total.bar(ciudades, delitos_reportados, color='#e30613', edgecolor='#002855', linewidth=1.5)
     ax_total.set_ylabel('Cantidad', fontsize=12, fontweight='bold', fontname='Arial')
     ax_total.set_xlabel('Ciudad', fontsize=12, fontweight='bold', fontname='Arial')
@@ -121,6 +136,8 @@ with col1:
         ax_total.text(i, v + 20, str(v), ha='center', va='bottom', color='#e30613', fontweight='bold', fontsize=11)
     st.pyplot(fig_total, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
+
+with col2:
     # Gráfico de barras por delitos en cada ciudad
     st.markdown("<div class='card' style='text-align:center;'><div class='title'>Delitos por tipo y ciudad</div>", unsafe_allow_html=True)
     # Datos de ejemplo para delitos por ciudad
@@ -131,7 +148,7 @@ with col1:
         'Barranquilla': [300, 200, 80, 20],
         'Cartagena': [200, 100, 80, 20]
     }
-    fig3, ax3 = plt.subplots(figsize=(6,3), facecolor='#fff')
+    fig3, ax3 = plt.subplots(figsize=(6,4), facecolor='#fff')
     width = 0.18
     x = range(len(ciudades))
     for i, delito in enumerate(delitos):
@@ -150,33 +167,34 @@ with col1:
     ax3.spines['bottom'].set_color('#002855')
     st.pyplot(fig3, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
+
+with col3:
+    # Gráfico de pie con distribución de delitos
     st.markdown("<div class='card' style='text-align:center;'><div class='title'>Distribución de delitos</div>", unsafe_allow_html=True)
-    fig2, ax2 = plt.subplots(figsize=(3,3), facecolor='#181c2b')
+    fig2, ax2 = plt.subplots(figsize=(5,4), facecolor='#fff')
     wedges, texts, autotexts = ax2.pie(delitos_cant, labels=delitos, autopct='%1.1f%%', colors=['#ff3b3b','#00eaff','#ffb700','#00ffae'], wedgeprops={'edgecolor':'#fff','linewidth':1.2}, startangle=90)
     for text in texts:
         text.set_fontsize(11)
-    fig2.patch.set_facecolor('#181c2b')
-    ax2.set_title('Distribución de Delitos', color='#ffb700', fontsize=10, fontweight='bold', fontname='Arial')
-    # Leyenda fuera del gráfico
-    ax2.legend(wedges, delitos, title="Delitos", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), fontsize=7)
+    fig2.patch.set_facecolor('#fff')
+    ax2.set_title('Distribución de Delitos', color='#002855', fontsize=14, fontweight='bold', fontname='Arial', pad=16)
     st.pyplot(fig2, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-with col2:
-    st.markdown("<div class='card'><div class='title'>Mapa de delitos por ciudad</div>", unsafe_allow_html=True)
-    coords = {
-        'Bogotá': [4.7110, -74.0721],
-        'Medellín': [6.2442, -75.5812],
-        'Cali': [3.4516, -76.5320],
-        'Barranquilla': [10.9685, -74.7813],
-        'Cartagena': [10.3910, -75.4794]
-    }
-    mapa = folium.Map(location=[4.5709, -74.2973], zoom_start=5)
-    for ciudad, cantidad in zip(ciudades, delitos_reportados):
-        if ciudad in coords:
-            folium.Marker(coords[ciudad], popup=f"{ciudad}: {cantidad} delitos").add_to(mapa)
-    st_folium(mapa, width=480, height=320)
-    st.markdown("</div>", unsafe_allow_html=True)
+# Sección completa para el mapa (ancho completo)
+st.markdown("<div class='card'><div class='title'>Mapa de delitos por ciudad</div>", unsafe_allow_html=True)
+coords = {
+    'Bogotá': [4.7110, -74.0721],
+    'Medellín': [6.2442, -75.5812],
+    'Cali': [3.4516, -76.5320],
+    'Barranquilla': [10.9685, -74.7813],
+    'Cartagena': [10.3910, -75.4794]
+}
+mapa = folium.Map(location=[4.5709, -74.2973], zoom_start=5)
+for ciudad, cantidad in zip(ciudades, delitos_reportados):
+    if ciudad in coords:
+        folium.Marker(coords[ciudad], popup=f"{ciudad}: {cantidad} delitos").add_to(mapa)
+st_folium(mapa, width=None, height=400)
+st.markdown("</div>", unsafe_allow_html=True)
 
 # Botón para descargar informe
 st.markdown("<div class='card'><div class='title'>Generar informe</div>", unsafe_allow_html=True)
